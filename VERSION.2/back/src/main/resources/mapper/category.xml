@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bennu.note.mapper.iface.CategoryMapper">
+
+    <resultMap id="resultMapCategory" type="cl.bennu.note.domain.Category">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="labelId" column="label_id"/>
+        <result property="name" column="name"/>
+        <result property="active" column="active"/>
+    </resultMap>
+
+    <insert id="insertCategory" parameterType="cl.bennu.note.domain.Category" keyProperty="id" useGeneratedKeys="true" >
+        insert into category (user_id,label_id,name,active)
+        values (#{userId},#{labelId},#{name},#{active})
+    </insert>
+
+    <select id="selectCategory" resultMap="resultMapCategory" >
+        SELECT id, user_id, label_id, name, active FROM category
+    </select>
+
+    <select id="selectCategoryById" resultType="cl.bennu.note.domain.Category"  parameterType="java.lang.Long"  >
+        SELECT id, user_id, label_id, name, active FROM category WHERE id = #{id}
+    </select>
+
+    <update id="updateCategory" parameterType="cl.bennu.note.domain.Category">
+        UPDATE category SET
+        id = #{id},
+        name = #{name},
+        active = #{active}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteCategory" parameterType="cl.bennu.note.domain.Category">
+        delete from category where id = #{id}
+    </delete>
+
+</mapper>

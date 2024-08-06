@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+</mapper>
+
+<mapper namespace="cl.bennu.note.mapper.iface.CategoryMapper">
+
+    <resultMap id="resultMapCategory" type="cl.bennu.note.domain.Category">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="labelId" column="label_id"/>
+        <result property="name" column="name"/>
+        <result property="active" column="active"/>
+    </resultMap>
+
+    <select id="selectCategory" resultMap="resultMapCategory">
+        select id, user_id, label_id, name, active from category
+    </select>
+
+    <select id="selectCategoryById" resultType="cl.bennu.note.domain.Category"  parameterType="java.lang.Long">
+        select id, user_id, label_id, name, active from category where id = #{id}
+    </select>
+
+    <select id="findCategory" resultMap="resultMapCategory" parameterType="cl.bennu.note.domain.Category">
+        select id, user_id, label_id, name, active from category
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null">
+                <bind name="_name" value="'%' + name + '%'"/>
+                and name like #{_name}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bennu.note.mapper.iface.CountryMapper">
+
+
+
+    <resultMap id="resultMapCountry" type="cl.bennu.note.domain.Country">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="flag" column="flag"/>
+        <result property="prefix" column="prefix"/>
+        <result property="values" column="valores"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="cl.bennu.note.domain.Country" keyProperty="id" useGeneratedKeys="true">
+        insert into Country ( name, flag, prefix,valores) values (#{name},#{flag},#{prefix},#{values})
+    </insert>
+
+    <update id="updateCountry" parameterType="cl.bennu.note.domain.Country" keyProperty="id" useGeneratedKeys="true" >
+        update Country set name = #{name}, flag = #{flag}, prefix = #{prefix},valores =#{values} where id = #{id}
+    </update>
+
+    <delete id="deleteCountryId" parameterType="cl.bennu.note.domain.Country">
+        delete from country where id = #{id}
+    </delete>
+
+    <select id="selectCountryById" resultMap="resultMapCountry" parameterType="java.lang.Long">
+        select id, name, flag, prefix, valores from country where id = #{id}
+    </select>
+
+    <select id="selectAllCountry" resultMap="resultMapCountry" parameterType="cl.bennu.note.domain.Country">
+        select id, name, flag, prefix, valores from country
+    </select>
+
+</mapper>
